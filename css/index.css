@@ -1354,6 +1354,7 @@ canvas:not(#ribbon-canvas),
     transform: translateX(0);
   }
 }
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Open+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap");
 :root {
   --global-font-size: 14px;
   --global-bg: #fff;
@@ -1396,9 +1397,11 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: ChironSungHK,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
+  font-family: Open Sans,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+  overflow-x: hidden;
+  font-weight: 400;
 }
 *::-webkit-scrollbar {
   width: 8px;
@@ -1532,7 +1535,7 @@ a:hover {
 #site-name,
 #aside-content .author-info__name,
 #aside-content .author-info__description {
-  font-family: ChironSungHK,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
+  font-family: Open Sans,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
 }
 .is-center {
   text-align: center;
@@ -2054,7 +2057,7 @@ figure.highlight pre .number {
   height: 100%;
   vertical-align: top;
   text-align: center;
-  font-family: ChironSungHK,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
+  font-family: Open Sans,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
 }
 @media screen and (max-width: 768px) {
   .error404 #error-wrap .error-content .error-info {
@@ -3419,11 +3422,21 @@ h1.page-title + .tag-cloud-list {
 #footer-wrap .framework-info a {
   padding: 10px;
 }
+#video-wrapper {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+}
+#home-video {
+  height: 100vh;
+  width: 100vw;
+  object-fit: cover;
+}
 #page-header {
   position: relative;
   width: 100%;
   background-color: transparent;
-  backdrop-filter: blur(5px);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -3454,17 +3467,18 @@ h1.page-title + .tag-cloud-list {
 #page-header #site-subtitle,
 #page-header #scroll-down .scroll-down-effects {
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
   line-height: 1.5;
 }
 #page-header #site-title {
   margin: 0;
+  font-weight: 300;
   color: var(--white);
-  font-size: 1.85em;
+  font-size: 2.55em;
 }
 @media screen and (min-width: 768px) {
   #page-header #site-title {
-    font-size: 2.85em;
+    font-size: 3.55em;
   }
 }
 #page-header #site-subtitle {
@@ -3732,6 +3746,19 @@ h1.page-title + .tag-cloud-list {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  height: 100%;
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-box;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }
 #nav #toggle-menu {
   display: none;
@@ -3751,6 +3778,10 @@ h1.page-title + .tag-cloud-list {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
   font-weight: bold;
   cursor: pointer;
+  height: 50%;
+}
+#nav #site-name-img {
+  height: 100%;
 }
 #nav .menus_items {
   display: inline;
@@ -3758,7 +3789,7 @@ h1.page-title + .tag-cloud-list {
 #nav .menus_items .menus_item {
   position: relative;
   display: inline-block;
-  padding: 0 0 0 14px;
+  padding: 0 0 0 50px;
 }
 #nav .menus_items .menus_item:hover .menus_item_child {
   display: block;
