@@ -121,8 +121,8 @@ const btf = {
   },
 
   scrollToDest: (pos, time = 500) => {
-    const currentPos = window.pageYOffset
-    if (currentPos > pos) pos = pos - 70
+    const currentPos = window.scrollY
+    // if (currentPos > pos) pos = pos - 70
 
     if ('scrollBehavior' in document.documentElement.style) {
       window.scrollTo({

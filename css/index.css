@@ -1404,23 +1404,11 @@ body {
   font-weight: 400;
 }
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-*::-webkit-scrollbar-thumb {
-  background-image: -webkit-linear-gradient(45deg, var(--scrollbar-color) 0% 5.2631578947368425%, rgba(162,135,172,0.8) 5.2631578947368425% 10.526315789473685%, var(--scrollbar-color) 10.526315789473685% 15.789473684210527%, rgba(162,135,172,0.8) 15.789473684210527% 21.05263157894737%, var(--scrollbar-color) 21.05263157894737% 26.315789473684212%, rgba(162,135,172,0.8) 26.315789473684212% 31.578947368421055%, var(--scrollbar-color) 31.578947368421055% 36.8421052631579%, rgba(162,135,172,0.8) 36.8421052631579% 42.10526315789474%, var(--scrollbar-color) 42.10526315789474% 47.36842105263158%, rgba(162,135,172,0.8) 47.36842105263158% 52.631578947368425%, var(--scrollbar-color) 52.631578947368425% 57.89473684210527%, rgba(162,135,172,0.8) 57.89473684210527% 63.15789473684211%, var(--scrollbar-color) 63.15789473684211% 68.42105263157896%, rgba(162,135,172,0.8) 68.42105263157896% 73.6842105263158%, var(--scrollbar-color) 73.6842105263158% 78.94736842105263%, rgba(162,135,172,0.8) 78.94736842105263% 84.21052631578948%, var(--scrollbar-color) 84.21052631578948% 89.47368421052633%, rgba(162,135,172,0.8) 89.47368421052633% 94.73684210526316%, var(--scrollbar-color) 94.73684210526316% 100%);
-  background-image: -moz-linear-gradient(45deg, var(--scrollbar-color) 0% 5.2631578947368425%, rgba(162,135,172,0.8) 5.2631578947368425% 10.526315789473685%, var(--scrollbar-color) 10.526315789473685% 15.789473684210527%, rgba(162,135,172,0.8) 15.789473684210527% 21.05263157894737%, var(--scrollbar-color) 21.05263157894737% 26.315789473684212%, rgba(162,135,172,0.8) 26.315789473684212% 31.578947368421055%, var(--scrollbar-color) 31.578947368421055% 36.8421052631579%, rgba(162,135,172,0.8) 36.8421052631579% 42.10526315789474%, var(--scrollbar-color) 42.10526315789474% 47.36842105263158%, rgba(162,135,172,0.8) 47.36842105263158% 52.631578947368425%, var(--scrollbar-color) 52.631578947368425% 57.89473684210527%, rgba(162,135,172,0.8) 57.89473684210527% 63.15789473684211%, var(--scrollbar-color) 63.15789473684211% 68.42105263157896%, rgba(162,135,172,0.8) 68.42105263157896% 73.6842105263158%, var(--scrollbar-color) 73.6842105263158% 78.94736842105263%, rgba(162,135,172,0.8) 78.94736842105263% 84.21052631578948%, var(--scrollbar-color) 84.21052631578948% 89.47368421052633%, rgba(162,135,172,0.8) 89.47368421052633% 94.73684210526316%, var(--scrollbar-color) 94.73684210526316% 100%);
-  background-image: -o-linear-gradient(45deg, var(--scrollbar-color) 0% 5.2631578947368425%, rgba(162,135,172,0.8) 5.2631578947368425% 10.526315789473685%, var(--scrollbar-color) 10.526315789473685% 15.789473684210527%, rgba(162,135,172,0.8) 15.789473684210527% 21.05263157894737%, var(--scrollbar-color) 21.05263157894737% 26.315789473684212%, rgba(162,135,172,0.8) 26.315789473684212% 31.578947368421055%, var(--scrollbar-color) 31.578947368421055% 36.8421052631579%, rgba(162,135,172,0.8) 36.8421052631579% 42.10526315789474%, var(--scrollbar-color) 42.10526315789474% 47.36842105263158%, rgba(162,135,172,0.8) 47.36842105263158% 52.631578947368425%, var(--scrollbar-color) 52.631578947368425% 57.89473684210527%, rgba(162,135,172,0.8) 57.89473684210527% 63.15789473684211%, var(--scrollbar-color) 63.15789473684211% 68.42105263157896%, rgba(162,135,172,0.8) 68.42105263157896% 73.6842105263158%, var(--scrollbar-color) 73.6842105263158% 78.94736842105263%, rgba(162,135,172,0.8) 78.94736842105263% 84.21052631578948%, var(--scrollbar-color) 84.21052631578948% 89.47368421052633%, rgba(162,135,172,0.8) 89.47368421052633% 94.73684210526316%, var(--scrollbar-color) 94.73684210526316% 100%);
-  background-image: -ms-linear-gradient(45deg, var(--scrollbar-color) 0% 5.2631578947368425%, rgba(162,135,172,0.8) 5.2631578947368425% 10.526315789473685%, var(--scrollbar-color) 10.526315789473685% 15.789473684210527%, rgba(162,135,172,0.8) 15.789473684210527% 21.05263157894737%, var(--scrollbar-color) 21.05263157894737% 26.315789473684212%, rgba(162,135,172,0.8) 26.315789473684212% 31.578947368421055%, var(--scrollbar-color) 31.578947368421055% 36.8421052631579%, rgba(162,135,172,0.8) 36.8421052631579% 42.10526315789474%, var(--scrollbar-color) 42.10526315789474% 47.36842105263158%, rgba(162,135,172,0.8) 47.36842105263158% 52.631578947368425%, var(--scrollbar-color) 52.631578947368425% 57.89473684210527%, rgba(162,135,172,0.8) 57.89473684210527% 63.15789473684211%, var(--scrollbar-color) 63.15789473684211% 68.42105263157896%, rgba(162,135,172,0.8) 68.42105263157896% 73.6842105263158%, var(--scrollbar-color) 73.6842105263158% 78.94736842105263%, rgba(162,135,172,0.8) 78.94736842105263% 84.21052631578948%, var(--scrollbar-color) 84.21052631578948% 89.47368421052633%, rgba(162,135,172,0.8) 89.47368421052633% 94.73684210526316%, var(--scrollbar-color) 94.73684210526316% 100%);
-  background-image: linear-gradient(45deg, var(--scrollbar-color) 0% 5.2631578947368425%, rgba(162,135,172,0.8) 5.2631578947368425% 10.526315789473685%, var(--scrollbar-color) 10.526315789473685% 15.789473684210527%, rgba(162,135,172,0.8) 15.789473684210527% 21.05263157894737%, var(--scrollbar-color) 21.05263157894737% 26.315789473684212%, rgba(162,135,172,0.8) 26.315789473684212% 31.578947368421055%, var(--scrollbar-color) 31.578947368421055% 36.8421052631579%, rgba(162,135,172,0.8) 36.8421052631579% 42.10526315789474%, var(--scrollbar-color) 42.10526315789474% 47.36842105263158%, rgba(162,135,172,0.8) 47.36842105263158% 52.631578947368425%, var(--scrollbar-color) 52.631578947368425% 57.89473684210527%, rgba(162,135,172,0.8) 57.89473684210527% 63.15789473684211%, var(--scrollbar-color) 63.15789473684211% 68.42105263157896%, rgba(162,135,172,0.8) 68.42105263157896% 73.6842105263158%, var(--scrollbar-color) 73.6842105263158% 78.94736842105263%, rgba(162,135,172,0.8) 78.94736842105263% 84.21052631578948%, var(--scrollbar-color) 84.21052631578948% 89.47368421052633%, rgba(162,135,172,0.8) 89.47368421052633% 94.73684210526316%, var(--scrollbar-color) 94.73684210526316% 100%);
-  border-radius: 4px;
-}
-*::-webkit-scrollbar-track {
-  background-color: transparent;
+  display: none;
 }
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-color) transparent;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 input::placeholder {
   color: var(--font-color);
@@ -1430,7 +1418,7 @@ input::placeholder {
   z-index: -999;
   width: 100%;
   height: 100%;
-  background: black;
+  background: white;
   background-attachment: local;
   background-position: center;
   background-size: cover;
@@ -3433,6 +3421,14 @@ h1.page-title + .tag-cloud-list {
   width: 100vw;
   object-fit: cover;
 }
+#site-name-img-top {
+  padding: 0 36px;
+  margin: 15px 0;
+  height: 30px;
+  position: absolute;
+  z-index: 10;
+  backdrop-filter: drop-shadow(5px 5px 4px #000);
+}
 #page-header {
   position: relative;
   width: 100%;
@@ -5416,145 +5412,6 @@ blockquote.pullquote.right {
 }
 #article-container .timeline + .timeline {
   margin-top: -20px;
-}
-[data-theme='dark'] {
-  --global-bg: #0d0d0d;
-  --font-color: rgba(255,255,255,0.7);
-  --hr-border: rgba(255,255,255,0.4);
-  --hr-before-color: rgba(255,255,255,0.7);
-  --search-bg: #121212;
-  --search-input-color: rgba(255,255,255,0.7);
-  --search-result-title: rgba(255,255,255,0.9);
-  --preloader-bg: #0d0d0d;
-  --preloader-color: rgba(255,255,255,0.7);
-  --tab-border-color: #2c2c2c;
-  --tab-botton-bg: #2c2c2c;
-  --tab-botton-color: rgba(255,255,255,0.7);
-  --tab-button-hover-bg: #383838;
-  --tab-button-active-bg: #121212;
-  --card-bg: rgba(128,128,128,0.1);
-  --sidebar-bg: #121212;
-  --btn-hover-color: #787878;
-  --btn-color: rgba(255,255,255,0.7);
-  --btn-bg: #1f1f1f;
-  --text-bg-hover: #383838;
-  --light-grey: rgba(255,255,255,0.7);
-  --dark-grey: rgba(255,255,255,0.2);
-  --white: rgba(255,255,255,0.9);
-  --text-highlight-color: rgba(255,255,255,0.9);
-  --blockquote-color: rgba(255,255,255,0.7);
-  --blockquote-bg: rgba(26,26,26,0.6);
-  --reward-pop: #2c2c2c;
-  --toc-link-color: rgba(255,255,255,0.6);
-  --hl-color: rgba(255,255,255,0.7);
-  --hl-bg: rgba(23,23,23,0.467);
-  --hltools-bg: rgba(26,26,26,0.6);
-  --hltools-color: #90a4ae;
-  --hlnumber-bg: rgba(23,23,23,0.6);
-  --hlnumber-color: rgba(255,255,255,0.4);
-  --hlscrollbar-bg: linear-gradient(45deg, #303030 0% 5.2631578947368425%, #222 5.2631578947368425% 10.226315789473684%, #303030 10.226315789473684% 15.789473684210527%, #222 15.789473684210527% 21.05263157894737%, #303030 21.05263157894737% 26.315789473684212%, #222 26.315789473684212% 31.578947368421055%, #303030 31.578947368421055% 36.8421052631579%, #222 36.8421052631579% 42.10526315789474%, #303030 42.10526315789474% 47.36842105263158%, #222 47.36842105263158% 52.631578947368425%, #303030 52.631578947368425% 57.89473684210527%, #222 57.89473684210527% 63.15789473684211%, #303030 63.15789473684211% 68.42105263157896%, #222 68.42105263157896% 73.6842105263158%, #303030 73.6842105263158% 78.94736842105263%, #222 78.94736842105263% 84.21052631578948%, #303030 84.21052631578948% 89.47368421052633%, #222 89.47368421052633% 94.73684210526316%, #303030 94.73684210526316% 100%);
-  --hlexpand-bg: linear-gradient(180deg, rgba(23,23,23,0.6), rgba(23,23,23,0.9));
-  --scrollbar-color: #ae96b6;
-  --timeline-bg: #1f1f1f;
-}
-[data-theme='dark'] #web_bg:before,
-[data-theme='dark'] #footer:before,
-[data-theme='dark'] #page-header:before {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.65);
-  content: '';
-}
-[data-theme='dark'] #article-container code {
-  background: rgba(0,0,0,0.3);
-  border-radius: 5px;
-}
-[data-theme='dark'] #article-container pre > code {
-  background: #171717;
-}
-[data-theme='dark'] #article-container figure.highlight {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-[data-theme='dark'] #article-container .note code {
-  background: rgba(27,31,35,0.05);
-}
-[data-theme='dark'] #article-container .aplayer {
-  filter: brightness(0.8);
-}
-[data-theme='dark'] #article-container kbd {
-  border-color: #696969;
-  background-color: #525252;
-  color: #e2f1ff;
-}
-[data-theme='dark'] #page-header.nav-fixed > #nav,
-[data-theme='dark'] #page-header.not-top-img > #nav {
-  background: transparent;
-  backdrop-filter: blur(25px);
-  -webkit-box-shadow: 0 5px 6px -5px rgba(133,133,133,0);
-  box-shadow: 0 5px 6px -5px rgba(133,133,133,0);
-}
-[data-theme='dark'] #post-comment #comment-switch {
-  background: #2c2c2c !important;
-}
-[data-theme='dark'] #post-comment #comment-switch .switch-btn {
-  filter: brightness(0.8);
-}
-[data-theme='dark'] .note {
-  filter: brightness(0.8);
-}
-[data-theme='dark'] .hide-button,
-[data-theme='dark'] .btn-beautify,
-[data-theme='dark'] .hl-label,
-[data-theme='dark'] .post-outdate-notice,
-[data-theme='dark'] .error-img,
-[data-theme='dark'] #article-container iframe,
-[data-theme='dark'] .gist,
-[data-theme='dark'] .ads-wrap {
-  filter: brightness(0.8);
-}
-[data-theme='dark'] img {
-  filter: brightness(0.8);
-}
-[data-theme='dark'] #aside-content .aside-list > .aside-list-item:not(:last-child) {
-  border-bottom: 1px dashed rgba(255,255,255,0.1);
-}
-[data-theme='dark'] #gitalk-container {
-  filter: brightness(0.8);
-}
-[data-theme='dark'] #gitalk-container svg {
-  fill: rgba(255,255,255,0.9) !important;
-}
-[data-theme='dark'] #disqusjs #dsqjs:hover,
-[data-theme='dark'] #disqusjs #dsqjs:focus,
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-tab-active,
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-no-comment {
-  color: rgba(255,255,255,0.7);
-}
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-order-label {
-  background-color: #1f1f1f;
-}
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-post-body {
-  color: rgba(255,255,255,0.7);
-}
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-post-body code,
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-post-body pre {
-  background: #2c2c2c;
-}
-[data-theme='dark'] #disqusjs #dsqjs .dsqjs-post-body blockquote {
-  color: rgba(255,255,255,0.7);
-}
-[data-theme='dark'] #artitalk_main #lazy {
-  background: #121212;
-}
-[data-theme='dark'] #operare_artitalk .c2 {
-  background: #121212;
-}
-@media screen and (max-width: 900px) {
-  [data-theme='dark'] #card-toc {
-    background: #1f1f1f;
-  }
 }
 .read-mode {
   --font-color: #4c4948;
