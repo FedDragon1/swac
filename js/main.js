@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     window.scrollCollect = scrollTask
 
-    window.addEventListener('scroll', scrollCollect)
+    // window.addEventListener('scroll', scrollCollect)
   }
 
   /**
