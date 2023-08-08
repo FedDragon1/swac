@@ -52,10 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * 首頁top_img底下的箭頭
    */
+  const firstPageHeight = document.getElementById('content-inner').offsetTop;
   const scrollDownInIndex = () => {
     const $scrollDownEle = document.getElementById('scroll-down')
     $scrollDownEle && $scrollDownEle.addEventListener('click', function () {
-      btf.scrollToDest(document.getElementById('content-inner').offsetTop, 300)
+      btf.scrollToDest(firstPageHeight, 300)
     })
   }
 
@@ -93,6 +94,45 @@ document.addEventListener('DOMContentLoaded', function () {
   playButton.addEventListener('click', playButtonClick)
   cross.addEventListener('click', crossClick)
 
+  /**
+   * 首页滑动检测
+   */
+
+  // find the scroll direction
+  function scrollDirection (currentTop) {
+    const result = currentTop > initTop // true is down & false is up
+    initTop = currentTop
+    return result
+  }
+
+  const scrollDetect = (e) => {
+    //test if first page
+    const isDown = e.deltaY > 0
+    if (window.scrollY < firstPageHeight && isDown) {
+      e.preventDefault()
+      btf.scrollToDest(firstPageHeight, 300)
+    } else if (window.scrollY + e.deltaY < firstPageHeight && !isDown) {
+      e.preventDefault()
+      btf.scrollToDest(0, 300)
+    }
+  }
+
+  const touchEvent = (() => {
+    let y = Infinity;
+    return (e) => {
+      const nowY = e.touches[0].pageY;
+      const isDown = nowY > y
+
+      if (window.scrollY <= 50 && isDown) {
+        e.preventDefault()
+        btf.scrollToDest(firstPageHeight, 300)
+      }
+
+      y = nowY;
+    }
+  })()
+
+  btf.filterWheelAndMouse(btf.throttle(scrollDetect, 300), btf.throttle(touchEvent, 300))
 
   /**
    * 代碼
@@ -297,13 +337,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.body.scrollHeight <= innerHeight) {
       $rightside.style.cssText = 'opacity: 1; transform: translateX(-58px)'
       return
-    }
-
-    // find the scroll direction
-    function scrollDirection (currentTop) {
-      const result = currentTop > initTop // true is down & false is up
-      initTop = currentTop
-      return result
     }
 
     let initTop = 0
