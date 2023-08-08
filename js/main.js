@@ -73,6 +73,23 @@ document.addEventListener('DOMContentLoaded', function () {
   playButton.addEventListener("mouseover", btf.throttle(playButtonHover, 200))
   playButton.addEventListener("mouseout", btf.throttle(playButtonUnhover, 200))
 
+  const videoPlayerWrapper = document.getElementById("promo-wrapper")
+  const cross = document.getElementById('promo-close')
+  const playButtonClick = () => {
+    videoPlayerWrapper.style.zIndex = '3000';
+    videoPlayerWrapper.style.opacity = '1';
+    // videoPlayerWrapper.style.visibility = ''
+  }
+  const crossClickCallback = () => videoPlayerWrapper.style.zIndex = '-1'
+  const crossClick = () => {
+    videoPlayerWrapper.style.opacity = '0'
+    setTimeout(crossClickCallback, 500)
+  }
+
+  playButton.addEventListener('click', playButtonClick)
+  cross.addEventListener('click', crossClick)
+
+
   /**
    * 代碼
    * 只適用於Hexo默認的代碼渲染
