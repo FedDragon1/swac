@@ -60,6 +60,20 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
+   * 播放按钮hover
+   */
+  const playButtonTriangle = document.getElementById("play-btn-triangle")
+  const playButton = document.getElementById("play-btn")
+  const playButtonHover = () => {
+    playButtonTriangle.classList.add("hover")
+  }
+  const playButtonUnhover = () => {
+    playButtonTriangle.classList.remove("hover")
+  }
+  playButton.addEventListener("mouseover", btf.throttle(playButtonHover, 200))
+  playButton.addEventListener("mouseout", btf.throttle(playButtonUnhover, 200))
+
+  /**
    * 代碼
    * 只適用於Hexo默認的代碼渲染
    */
