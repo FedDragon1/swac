@@ -3453,12 +3453,12 @@ h1.page-title + .tag-cloud-list {
   background: rgba(0,0,0,0.467);
 }
 .plyr {
-  border-radius: 5px;
+  border-radius: 10px;
 }
 .video-close {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAARRJREFUSEvN18sNwjAMgOE/VxZgBmAIBEuwASdWYAcuHNiAKXgsATMwhVFQQaI0tWMaSo+Vmi+uk9gJIjIBtsAihHCj4CMiQ2APrIKInIApcAVmpfAKPQBj4BzhOIsjMCqFNxrxz5bEU2OHZ0pL4G1jvuCuI9cCeYO7wjU0Oh/wt7gFTcJe3Iq2wg34BZin9nkOqsJWPBc1wRruQc1wCq/OANep17iqU3WiFl3MefzeddRmwQ2Rx1eu4vIt7EKzcuzd26m0mSNuW70iMgA2wNpaz02wtmVEZAcsc/KtwhrqTUErbEG99TwJ56Ae/H/KoifS+paxjNF/62OZZW6vrzZ7JVBtwfXX0P/4CvOs3Y8rTC+XtjtsokIg6khevAAAAABJRU5ErkJggg==") no-repeat;
   display: inline-block;
-  height: 5%;
+  height: 20px;
   aspect-ratio: 1/1;
   -webkit-transition: -webkit-transform 0.5s ease-in-out;
   -moz-transition: -moz-transform 0.5s ease-in-out;
@@ -3475,8 +3475,8 @@ h1.page-title + .tag-cloud-list {
   transform: rotate(90deg);
 }
 .video-aspect-ratio-wrapper {
-  width: 80%;
-  aspect-ratio: 16/9;
+  width: 75%;
+  max-height: 90%;
 }
 #video-fullscreen {
   height: 100%;

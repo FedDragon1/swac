@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * 播放按钮hover
    */
+  const body = document.getElementsByTagName("body")[0]
   const playButtonTriangle = document.getElementById("play-btn-triangle")
   const playButton = document.getElementById("play-btn")
   const playButtonHover = () => {
@@ -78,9 +79,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const playButtonClick = () => {
     videoPlayerWrapper.style.zIndex = '3000';
     videoPlayerWrapper.style.opacity = '1';
-    // videoPlayerWrapper.style.visibility = ''
+    body.style.overflowY = "hidden"
   }
-  const crossClickCallback = () => videoPlayerWrapper.style.zIndex = '-1'
+  const crossClickCallback = () => {
+    videoPlayerWrapper.style.zIndex = '-1'
+    body.style.overflowY = "scroll"
+  }
   const crossClick = () => {
     videoPlayerWrapper.style.opacity = '0'
     setTimeout(crossClickCallback, 500)
