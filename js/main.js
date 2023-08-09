@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * 首頁top_img底下的箭頭
    */
-  const firstPageHeight = document.getElementById('content-inner').offsetTop;
+  const firstPageHeight = document.getElementById('nav').offsetTop;
   const scrollDownInIndex = () => {
     const $scrollDownEle = document.getElementById('scroll-down')
     $scrollDownEle && $scrollDownEle.addEventListener('click', function () {
@@ -105,15 +105,29 @@ document.addEventListener('DOMContentLoaded', function () {
     return result
   }
 
+  const enableScrollAndAddSelf = (listener) => {
+    btf.filterWheelAndMouse(btf.debounce(scrollDetect, 1000), btf.throttle(touchEvent, 300))
+  }
+
   const scrollDetect = (e) => {
+    console.log(e)
     //test if first page
     const isDown = e.deltaY > 0
     if (window.scrollY < firstPageHeight && isDown) {
       e.preventDefault()
       btf.scrollToDest(firstPageHeight, 300)
+      // disable self and disable scroll for 1 second
+      window.removeEventListener('DOMMouseScroll', scrollDetect, false);
+      window.removeEventListener(wheelEvent, scrollDetect, wheelOpt);
+      disableScroll()
+      setTimeout(enableScroll, 500, scrollDetect)
     } else if (window.scrollY + e.deltaY < firstPageHeight && !isDown) {
       e.preventDefault()
       btf.scrollToDest(0, 300)
+      window.removeEventListener('DOMMouseScroll', scrollDetect, false);
+      window.removeEventListener(wheelEvent, scrollDetect, wheelOpt);
+      disableScroll()
+      setTimeout(enableScroll, 500, scrollDetect)
     }
   }
 
@@ -132,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })()
 
-  btf.filterWheelAndMouse(btf.throttle(scrollDetect, 300), btf.throttle(touchEvent, 300))
+  btf.filterWheelAndMouse(btf.throttle(scrollDetect, 500), btf.throttle(touchEvent, 500))
 
   /**
    * 代碼
