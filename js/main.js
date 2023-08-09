@@ -130,26 +130,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  const touchEvent = (() => {
-    let y = Infinity;
-    return (e) => {
-      const nowY = e.touches[0].pageY;
-      const isDown = y > nowY
+  // const touchEvent = (() => {
+  //   let y = Infinity;
+  //   return (e) => {
+  //     const nowY = e.touches[0].pageY;
+  //     const isDown = y > nowY
+  //
+  //     if (window.scrollY <= 100 && isDown) {
+  //       e.preventDefault()
+  //       btf.scrollToDest(firstPageHeight, 300)
+  //     } else if (window.scrollY - 50 < firstPageHeight && !isDown) {
+  //       e.preventDefault()
+  //       btf.scrollToDest(0, 300)
+  //     }
+  //
+  //     y = nowY;
+  //   }
+  // })()
 
-      console.log(isDown)
-      if (window.scrollY <= 100 && isDown) {
-        e.preventDefault()
-        btf.scrollToDest(firstPageHeight, 300)
-      } else if (window.scrollY - 50 < firstPageHeight && !isDown) {
-        e.preventDefault()
-        btf.scrollToDest(0, 300)
-      }
-
-      y = nowY;
-    }
-  })()
-
-  btf.filterWheelAndMouse(btf.throttle(scrollDetect, 500), btf.throttle(touchEvent, 500))
+  btf.filterWheelAndMouse(btf.throttle(scrollDetect, 500))
 
   /**
    * 代碼
