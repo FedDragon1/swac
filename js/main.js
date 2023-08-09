@@ -60,76 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }
 
-  /**
-   * 播放按钮hover
-   */
-  const body = document.getElementsByTagName("body")[0]
-  const playButtonTriangle = document.getElementById("play-btn-triangle")
-  const playButton = document.getElementById("play-btn")
-  const playButtonHover = () => {
-    playButtonTriangle.classList.add("hover")
-  }
-  const playButtonUnhover = () => {
-    playButtonTriangle.classList.remove("hover")
-  }
-  playButton.addEventListener("mouseover", btf.throttle(playButtonHover, 200))
-  playButton.addEventListener("mouseout", btf.throttle(playButtonUnhover, 200))
-
-  const videoPlayerWrapper = document.getElementById("promo-wrapper")
-  const cross = document.getElementById('promo-close')
-  const playButtonClick = () => {
-    videoPlayerWrapper.style.zIndex = '3000';
-    videoPlayerWrapper.style.opacity = '1';
-    body.style.overflowY = "hidden"
-  }
-  const crossClickCallback = () => {
-    videoPlayerWrapper.style.zIndex = '-1'
-    body.style.overflowY = "scroll"
-  }
-  const crossClick = () => {
-    videoPlayerWrapper.style.opacity = '0'
-    setTimeout(crossClickCallback, 500)
-  }
-
-  playButton.addEventListener('click', playButtonClick)
-  cross.addEventListener('click', crossClick)
-
-  /**
-   * 首页滑动检测
-   */
-
-  // find the scroll direction
-  function scrollDirection (currentTop) {
-    const result = currentTop > initTop // true is down & false is up
-    initTop = currentTop
-    return result
-  }
-
-  const enableScrollAndAddSelf = (listener) => {
-    btf.filterWheelAndMouse(btf.debounce(scrollDetect, 1000), btf.throttle(touchEvent, 300))
-  }
-
-  const scrollDetect = (e) => {
-    //test if first page
-    const isDown = e.deltaY > 0
-    if (window.scrollY < firstPageHeight && isDown) {
-      e.preventDefault()
-      btf.scrollToDest(firstPageHeight, 300)
-      // disable self and disable scroll for 1 second
-      window.removeEventListener('DOMMouseScroll', scrollDetect, false);
-      window.removeEventListener(wheelEvent, scrollDetect, wheelOpt);
-      disableScroll()
-      setTimeout(enableScroll, 500, scrollDetect)
-    } else if (window.scrollY + e.deltaY < firstPageHeight && !isDown) {
-      e.preventDefault()
-      btf.scrollToDest(0, 300)
-      window.removeEventListener('DOMMouseScroll', scrollDetect, false);
-      window.removeEventListener(wheelEvent, scrollDetect, wheelOpt);
-      disableScroll()
-      setTimeout(enableScroll, 500, scrollDetect)
-    }
-  }
-
   // const touchEvent = (() => {
   //   let y = Infinity;
   //   return (e) => {
@@ -148,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
   //   }
   // })()
 
-  btf.filterWheelAndMouse(btf.throttle(scrollDetect, 500))
+  // btf.filterWheelAndMouse(btf.throttle(scrollDetect, 500))
 
   /**
    * 代碼
@@ -345,6 +275,14 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * 滾動處理
    */
+  let initTop = 0;
+
+  function scrollDirection(currentTop) {
+    const result = currentTop > initTop // true is down & false is up
+    initTop = currentTop
+    return result
+  }
+
   const scrollFn = function () {
     const $rightside = document.getElementById('rightside')
     const innerHeight = window.innerHeight + 56
@@ -393,57 +331,57 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    const homePageScrollCallback = (slideHeight, isDown) => {
-      const currentTop = window.scrollY;
-
-      if (currentTop > slideHeight) {
-        if (isDown) {
-          if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
-          if (isChatBtnShow && isChatShow === true) {
-            chatBtnHide()
-            isChatShow = false
-          }
-        } else {
-          if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
-          if (isChatBtnHide && isChatShow === false) {
-            chatBtnShow()
-            isChatShow = true
-          }
-        }
-        if (window.getComputedStyle($rightside).getPropertyValue('opacity') === '0') {
-          $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
-        }
-      } else {
-        $header.classList.remove(/*'nav-fixed', */'nav-visible')
-        $rightside.style.cssText = "opacity: ''; transform: ''"
-      }
-
-      if (document.body.scrollHeight <= innerHeight) {
-        $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
-      }
-    }
-
-    const homePageScrollFn = (currentTop, isDown) => {
-      const slideHeight = document.getElementById('content-inner').offsetTop;
-      setTimeout(homePageScrollCallback, 200, slideHeight, isDown)
-    }
-
-    const scrollTask = btf.debounce((e) => {
-        e.preventDefault()
-        const currentTop = window.scrollY || document.documentElement.scrollTop
-        const isDown = scrollDirection(currentTop)
-        const isHomePage = document.getElementById("video-wrapper").classList.contains("full_page")
-
-        if (isHomePage) {
-          homePageScrollFn(currentTop, isDown, e)
-        } else {
-          commonScrollFn(currentTop, isDown, e)
-        }
-
-      }, 5)
-    
-    window.scrollCollect = scrollTask
-
+    // const homePageScrollCallback = (slideHeight, isDown) => {
+    //   const currentTop = window.scrollY;
+    //
+    //   if (currentTop > slideHeight) {
+    //     if (isDown) {
+    //       if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
+    //       if (isChatBtnShow && isChatShow === true) {
+    //         chatBtnHide()
+    //         isChatShow = false
+    //       }
+    //     } else {
+    //       if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
+    //       if (isChatBtnHide && isChatShow === false) {
+    //         chatBtnShow()
+    //         isChatShow = true
+    //       }
+    //     }
+    //     if (window.getComputedStyle($rightside).getPropertyValue('opacity') === '0') {
+    //       $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
+    //     }
+    //   } else {
+    //     $header.classList.remove(/*'nav-fixed', */'nav-visible')
+    //     $rightside.style.cssText = "opacity: ''; transform: ''"
+    //   }
+    //
+    //   if (document.body.scrollHeight <= innerHeight) {
+    //     $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
+    //   }
+    // }
+    //
+    // const homePageScrollFn = (currentTop, isDown) => {
+    //   const slideHeight = document.getElementById('content-inner').offsetTop;
+    //   setTimeout(homePageScrollCallback, 200, slideHeight, isDown)
+    // }
+    //
+    // const scrollTask = btf.debounce((e) => {
+    //     e.preventDefault()
+    //     const currentTop = window.scrollY || document.documentElement.scrollTop
+    //     const isDown = scrollDirection(currentTop)
+    //     const isHomePage = document.getElementById("video-wrapper").classList.contains("full_page")
+    //
+    //     if (isHomePage) {
+    //       homePageScrollFn(currentTop, isDown, e)
+    //     } else {
+    //       commonScrollFn(currentTop, isDown, e)
+    //     }
+    //
+    //   }, 5)
+    //
+    // window.scrollCollect = scrollTask
+    //
     // window.addEventListener('scroll', scrollCollect)
   }
 
@@ -909,4 +847,3 @@ document.addEventListener('DOMContentLoaded', function () {
   unRefreshFn()
 })
 
-document.getElementById("current-year-last-two").innerText = new Date().getFullYear().toString().substr(-2);

@@ -4063,9 +4063,6 @@ h1.page-title + .tag-cloud-list {
   width: 100%;
   height: 60px;
   font-size: 1.3em;
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
@@ -4708,7 +4705,7 @@ h1.page-title + .tag-cloud-list {
   position: fixed;
   top: 0;
   right: -300px;
-  z-index: 103;
+  z-index: 3103;
   overflow-x: hidden;
   overflow-y: auto;
   width: 300px;
