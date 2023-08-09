@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /**
    * 首頁top_img底下的箭頭
    */
-  const firstPageHeight = document.getElementById('nav').offsetTop;
+  const firstPageHeight = document.getElementById('page-header').offsetTop + document.getElementById('page-header').offsetHeight;
   const scrollDownInIndex = () => {
     const $scrollDownEle = document.getElementById('scroll-down')
     $scrollDownEle && $scrollDownEle.addEventListener('click', function () {
@@ -908,3 +908,5 @@ document.addEventListener('DOMContentLoaded', function () {
   refreshFn()
   unRefreshFn()
 })
+
+document.getElementById("current-year-last-two").innerText = new Date().getFullYear().toString().substr(-2);
