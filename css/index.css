@@ -1398,7 +1398,6 @@ body {
   font-family: tcm, Open Sans,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
-  contain: paint;
   font-weight: 400;
   width: 100vw;
 }
