@@ -1396,6 +1396,12 @@ body {
   overflow-x: hidden;
   font-weight: 400;
 }
+@media screen and (max-width: 768px) {
+  body {
+    width: 100vw;
+    padding: 0.8em 0;
+  }
+}
 img {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -3680,7 +3686,7 @@ h1.page-title + .tag-cloud-list {
 }
 @media screen and (max-width: 768px) {
   #page-header.full_page {
-    height: 90vh;
+    height: 93vh;
   }
 }
 #page-header.full_page #site-info {
