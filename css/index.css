@@ -3512,9 +3512,9 @@ h1.page-title + .tag-cloud-list {
 #current-year-wrapper {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABqCAYAAAD0vqx5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACc0lEQVR4nO3dv2sTYQDG8bsQNFOFEIOSpObUQcEtqS7dSh0yuOoqsYNBXRQUHFJqwb/AtlMDLhkqHbqoEDsqRPyxlENDApomVpIQaVUSbHmdFIpS8x3aO+zzmd+Dhy93wzudbUFutfL01PGT5+lz/wObHK59qJWdYWdktbHqJuKJ27s1yo+MMUuBQQ83PtVdZ9gZeVd5X95voX4JDnDGbrWaHyORo/GXr189OZtKz+z6Kp/a8c2y8/nAl+5aOxI5Ei8tLxf3cyjL2iHW5fn50NdbN9aHDkXDC4uLs+NjY8W9HOZHf/0Mpx+9Dd/MJJsHQ0MHZubm7l/L5V7s9TA/+iPWw2cryUujxyrBYCiQn5y8c29qyvVimB9ti/X4TfXc+JnYc8sKmOyVieuFQqHu1TA/+h2rXG1cTCejxc2trR+ZTGaiVCp1vRzmR0HLsqyV+trd07HD071e71sqlc66rvvd62F+FKx9bj9wouHcxsZ613FOZDudzqbXo/zKNsaYdqfVjMcSV/v9vvF6kF8ZY5ZsY4yxbfuC12P8Dt0N5R/XHdlOsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDFAhQLUCxAsQDbGKOfqQ3oJ4I1jfttEkjyAAAAAElFTkSuQmCC");
   background-repeat: no-repeat;
-  aspect-ratio: 3/4;
   height: 100px;
-  background-size: cover;
+  width: 75px;
+  background-size: contain;
   position: absolute;
   right: 50px;
   top: 30px;
