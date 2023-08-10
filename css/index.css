@@ -1384,6 +1384,12 @@ canvas:not(#ribbon-canvas),
 .plyr__control--overlaid {
   background: var(--plyr-color-main);
 }
+@media screen and (max-width: 768px) {
+  html {
+    width: 100vw;
+    overflow-x: hidden !important;
+  }
+}
 body {
   position: relative;
   min-height: 100%;
