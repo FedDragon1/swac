@@ -1387,7 +1387,7 @@ canvas:not(#ribbon-canvas),
 @media screen and (max-width: 768px) {
   html {
     width: 100vw;
-    overflow-x: hidden !important;
+    contain: paint;
   }
 }
 body {
@@ -1399,14 +1399,9 @@ body {
   font-family: tcm, Open Sans,-apple-system, IBM Plex Mono ,monosapce,"微软雅黑", sans-serif;;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
-  overflow-x: hidden;
+  contain: paint;
   font-weight: 400;
-}
-@media screen and (max-width: 768px) {
-  body {
-    width: 100vw;
-    overflow-x: hidden !important;
-  }
+  width: 100vw;
 }
 img {
   -webkit-user-select: none;
@@ -3636,9 +3631,14 @@ h1.page-title + .tag-cloud-list {
   width: 100vw;
   top: 0;
 }
+@media screen and (max-width: 768px) {
+  #video-wrapper {
+    height: 93vh;
+  }
+}
 #home-video {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   filter: brightness(0.5);
 }

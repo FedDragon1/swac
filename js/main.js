@@ -17,11 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth <= 768) hideMenuIndex = true
     else hideMenuIndex = blogNameWidth + menusWidth + searchWidth > $nav.offsetWidth - 120
 
-    if (hideMenuIndex) {
-      $nav.classList.add('hide-menu')
-    } else {
-      $nav.classList.remove('hide-menu')
-    }
+    // if (hideMenuIndex) {
+    //   $nav.classList.add('hide-menu')
+    // } else {
+    //   $nav.classList.remove('hide-menu')
+    // }
   }
 
   // 初始化header
