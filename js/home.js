@@ -41,6 +41,10 @@ document.addEventListener('DOMContentLoaded',() => {
         // find the scroll direction
 
     const scrollDetect = (e) => {
+        if (videoPlayerWrapper.style.zIndex === '3000') {
+            return
+        }
+
         //test if first page
         const isDown = e.deltaY > 0
         if (window.scrollY < firstPageHeight && isDown) {
