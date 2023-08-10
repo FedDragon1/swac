@@ -1387,7 +1387,6 @@ canvas:not(#ribbon-canvas),
 @media screen and (max-width: 768px) {
   html {
     width: 100vw;
-    contain: paint;
   }
 }
 body {
