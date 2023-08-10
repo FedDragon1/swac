@@ -1399,7 +1399,6 @@ body {
 @media screen and (max-width: 768px) {
   body {
     width: 100vw;
-    padding: 0.8em 0;
   }
 }
 img {
