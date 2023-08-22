@@ -67,4 +67,16 @@ document.addEventListener('DOMContentLoaded',() => {
 
     btf.filterWheelAndMouse(btf.throttle(scrollDetect, 500))
     document.getElementById("current-year-last-two").innerText = new Date().getFullYear().toString().substr(-2);
+
+    gsap.registerPlugin(CustomEase);
+
+    ScrollTrigger.create({
+        trigger: '#screen1',
+        start: 'top top',
+        end: '+=3000',
+        scrub: true,
+        animation: gsap.timeline()
+            .fromTo('.text-headline', {top: 0}, {top: 2600, ease: "none"}, "<")
+            .fromTo('.text-headline', {opacity: 0}, {opacity:1, ease: CustomEase.create("custom", "M0,0.2,C0,0.2,0,1,0.2,1,0.33,1,0.8,1,0.8,1,1,1,1,0,1,0")}, "<")
+    })
 })
