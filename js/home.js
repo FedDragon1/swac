@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })()
 
     particlesJS.load("particle-js")
-    document.querySelector(".text-headline").style.opacity = '0.3';
+    document.querySelector("#text-hl-1").style.opacity = '0.3';
 
     (function screen2anims() {
         const canvas = document.querySelector("#mlp-canvas")
@@ -106,10 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             images.push(img)
         }
 
-        function getImgAddress(index) {
-            return `./img/mlp/${index}.webp`
-        }
-
         ScrollTrigger.create({
             trigger: "#screen2",
             start: 'top 35%',
@@ -121,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     top: 6200,
                     ease: CustomEase.create("custom", "M0,0,C0,0,0.088,0.036,0.2,0.148,0.2,0.148,0.9,0.84,0.9,0.84,0.952,0.892,1,1,1,1", "<")
                 })
-                .fromTo("#text-hl-2", {opacity: 0}, {opacity:1, ease: CustomEase.create("custom", "M0,0.2,C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")}, "<")
                 //
                 ,
             onUpdate: btf.throttle(self => {
@@ -133,24 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 20)
         })
 
-        // ScrollTrigger.create({
-        //     trigger: "#screen2",
-        //     start: "top top",
-        //     end: "+=800",
-        //     scrub: true,
-        //     markers: true,
-        //     animation: gsap.fromTo("#text-hl-2", {opacity: 0}, {opacity:1, ease: CustomEase.create("custom", "M0,0.2,C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")})
-        // })
-
-        // ScrollTrigger.create({
-        //     trigger: "#screen2",
-        //     start: "top top",
-        //     end: "+=6300",
-        //     scrub: true,
-        //     markers: true,
-        //     animation: gsap.to("#text-hl-2", {opacity: 0}, "+=6000")
-        // })
-
+        ScrollTrigger.create({
+            trigger: "#screen2",
+            start: 'top -=600',
+            end: '+=5000',
+            scrub: true,
+            markers: true,
+            animation: gsap.timeline()
+                .fromTo("#text-hl-2", {opacity: 0}, {
+                    opacity: 1,
+                    ease: CustomEase.create("custom", "M0,0 C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")
+                }, "<")
+        })
     })()
 
 })

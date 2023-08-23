@@ -4371,7 +4371,7 @@ div#screen2 {
 }
 #text-hl-2 {
   position: relative;
-  top: 50px;
+  top: 100px;
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
