@@ -1,356 +1,3 @@
-const btf = {
-  debounce: function (func, wait, immediate) {
-    let timeout
-    return function () {
-      const context = this
-      const args = arguments
-      const later = function () {
-        timeout = null
-        if (!immediate) func.apply(context, args)
-      }
-      const callNow = immediate && !timeout
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-      if (callNow) func.apply(context, args)
-    }
-  },
-
-  throttle: function (func, wait, options) {
-    let timeout, context, args
-    let previous = 0
-    if (!options) options = {}
-
-    const later = function () {
-      previous = options.leading === false ? 0 : new Date().getTime()
-      timeout = null
-      func.apply(context, args)
-      if (!timeout) context = args = null
-    }
-
-    const throttled = function () {
-      const now = new Date().getTime()
-      if (!previous && options.leading === false) previous = now
-      const remaining = wait - (now - previous)
-      context = this
-      args = arguments
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout)
-          timeout = null
-        }
-        previous = now
-        func.apply(context, args)
-        if (!timeout) context = args = null
-      } else if (!timeout && options.trailing !== false) {
-        timeout = setTimeout(later, remaining)
-      }
-    }
-
-    return throttled
-  },
-
-  sidebarPaddingR: () => {
-    const innerWidth = window.innerWidth
-    const clientWidth = document.body.clientWidth
-    const paddingRight = innerWidth - clientWidth
-    if (innerWidth !== clientWidth) {
-      document.body.style.paddingRight = paddingRight + 'px'
-    }
-  },
-
-  snackbarShow: (text, showAction = false, duration = 2000) => {
-    const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar
-    const bg = document.documentElement.getAttribute('data-theme') === 'light' ? bgLight : bgDark
-    Snackbar.show({
-      text: text,
-      backgroundColor: bg,
-      showAction: showAction,
-      duration: duration,
-      pos: position,
-      customClass: 'snackbar-css'
-    })
-  },
-
-  diffDate: (d, more = false) => {
-    const dateNow = new Date()
-    const datePost = new Date(d)
-    const dateDiff = dateNow.getTime() - datePost.getTime()
-    const minute = 1000 * 60
-    const hour = minute * 60
-    const day = hour * 24
-    const month = day * 30
-
-    let result
-    if (more) {
-      const monthCount = dateDiff / month
-      const dayCount = dateDiff / day
-      const hourCount = dateDiff / hour
-      const minuteCount = dateDiff / minute
-
-      if (monthCount > 12) {
-        result = datePost.toLocaleDateString().replace(/\//g, '-')
-      } else if (monthCount >= 1) {
-        result = parseInt(monthCount) + ' ' + GLOBAL_CONFIG.date_suffix.month
-      } else if (dayCount >= 1) {
-        result = parseInt(dayCount) + ' ' + GLOBAL_CONFIG.date_suffix.day
-      } else if (hourCount >= 1) {
-        result = parseInt(hourCount) + ' ' + GLOBAL_CONFIG.date_suffix.hour
-      } else if (minuteCount >= 1) {
-        result = parseInt(minuteCount) + ' ' + GLOBAL_CONFIG.date_suffix.min
-      } else {
-        result = GLOBAL_CONFIG.date_suffix.just
-      }
-    } else {
-      result = parseInt(dateDiff / day)
-    }
-    return result
-  },
-
-  loadComment: (dom, callback) => {
-    if ('IntersectionObserver' in window) {
-      const observerItem = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          callback()
-          observerItem.disconnect()
-        }
-      }, { threshold: [0] })
-      observerItem.observe(dom)
-    } else {
-      callback()
-    }
-  },
-
-  scrollToDest: (pos, time = 500) => {
-    const currentPos = window.scrollY
-    // if (currentPos > pos) pos = pos - 70
-
-    if ('scrollBehavior' in document.documentElement.style) {
-      window.scrollTo({
-        top: pos,
-        behavior: 'smooth'
-      })
-      return
-    }
-
-    let start = null
-    pos = +pos
-    window.requestAnimationFrame(function step (currentTime) {
-      start = !start ? currentTime : start
-      const progress = currentTime - start
-      if (currentPos < pos) {
-        window.scrollTo(0, ((pos - currentPos) * progress / time) + currentPos)
-      } else {
-        window.scrollTo(0, currentPos - ((currentPos - pos) * progress / time))
-      }
-      if (progress < time) {
-        window.requestAnimationFrame(step)
-      } else {
-        window.scrollTo(0, pos)
-      }
-    })
-  },
-
-  animateIn: (ele, text) => {
-    ele.style.display = 'block'
-    ele.style.animation = text
-  },
-
-  animateOut: (ele, text) => {
-    ele.addEventListener('animationend', function f () {
-      ele.style.display = ''
-      ele.style.animation = ''
-      ele.removeEventListener('animationend', f)
-    })
-    ele.style.animation = text
-  },
-
-  getParents: (elem, selector) => {
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.matches(selector)) return elem
-    }
-    return null
-  },
-
-  siblings: (ele, selector) => {
-    return [...ele.parentNode.children].filter((child) => {
-      if (selector) {
-        return child !== ele && child.matches(selector)
-      }
-      return child !== ele
-    })
-  },
-
-  /**
-   * @param {*} selector
-   * @param {*} eleType the type of create element
-   * @param {*} options object key: value
-   */
-  wrap: (selector, eleType, options) => {
-    const creatEle = document.createElement(eleType)
-    for (const [key, value] of Object.entries(options)) {
-      creatEle.setAttribute(key, value)
-    }
-    selector.parentNode.insertBefore(creatEle, selector)
-    creatEle.appendChild(selector)
-  },
-
-  unwrap: el => {
-    const elParentNode = el.parentNode
-    if (elParentNode !== document.body) {
-      elParentNode.parentNode.insertBefore(el, elParentNode)
-      elParentNode.parentNode.removeChild(elParentNode)
-    }
-  },
-
-  isHidden: ele => ele.offsetHeight === 0 && ele.offsetWidth === 0,
-
-  getEleTop: ele => {
-    let actualTop = ele.offsetTop
-    let current = ele.offsetParent
-
-    while (current !== null) {
-      actualTop += current.offsetTop
-      current = current.offsetParent
-    }
-
-    return actualTop
-  },
-
-  loadLightbox: ele => {
-    const service = GLOBAL_CONFIG.lightbox
-
-    if (service === 'mediumZoom') {
-      const zoom = mediumZoom(ele)
-      zoom.on('open', e => {
-        const photoBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#121212' : '#fff'
-        zoom.update({
-          background: photoBg
-        })
-      })
-    }
-
-    if (service === 'fancybox') {
-      ele.forEach(i => {
-        if (i.parentNode.tagName !== 'A') {
-          const dataSrc = i.dataset.lazySrc || i.src
-          const dataCaption = i.title || i.alt || ''
-          btf.wrap(i, 'a', { href: dataSrc, 'data-fancybox': 'gallery', 'data-caption': dataCaption, 'data-thumb': dataSrc })
-        }
-      })
-
-      if (!window.fancyboxRun) {
-        Fancybox.bind('[data-fancybox]', {
-          Hash: false,
-          Thumbs: {
-            autoStart: false
-          }
-        })
-        window.fancyboxRun = true
-      }
-    }
-  },
-
-  initJustifiedGallery: function (selector) {
-    selector.forEach(function (i) {
-      if (!btf.isHidden(i)) {
-        fjGallery(i, {
-          itemSelector: '.fj-gallery-item',
-          rowHeight: 220,
-          gutter: 4,
-          onJustify: function () {
-            this.$container.style.opacity = '1'
-          }
-        })
-      }
-    })
-  },
-
-  updateAnchor: (anchor) => {
-    if (anchor !== window.location.hash) {
-      if (!anchor) anchor = location.pathname
-      const title = GLOBAL_CONFIG_SITE.title
-      window.history.replaceState({
-        url: location.href,
-        title: title
-      }, title, anchor)
-    }
-  },
-
-  filterWheelAndMouse(scrollListener) {
-    // left: 37, up: 38, right: 39, down: 40,
-    // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-    let keys = {37: 1, 38: 1, 39: 1, 40: 1, 32:1, 33:1, 34:1, 35:1};
-
-    function preventDefault(e) {
-      e.preventDefault();
-    }
-
-    function preventDefaultForScrollKeys(e) {
-      if (keys[e.keyCode]) {
-        preventDefault(e);
-        return false;
-      }
-    }
-
-    var supportsPassive = false;
-    try {
-      window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
-        get: function () { supportsPassive = true; }
-      }));
-    } catch(e) {}
-
-    var wheelOpt = supportsPassive ? { passive: false } : false;
-    var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-    window.addEventListener('DOMMouseScroll', scrollListener, false); // older FF
-    window.addEventListener(wheelEvent, scrollListener, wheelOpt); // modern desktop
-    window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-
-  }
-
-}
-
-// left: 37, up: 38, right: 39, down: 40,
-// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-var keys = {37: 1, 38: 1, 39: 1, 40: 1, 32:1, 33:1, 34:1, 35:1};
-
-function preventDefault(e) {
-  e.preventDefault();
-}
-
-function preventDefaultForScrollKeys(e) {
-  if (keys[e.keyCode]) {
-    preventDefault(e);
-    return false;
-  }
-}
-
-// modern Chrome requires { passive: false } when adding event
-var supportsPassive = false;
-try {
-  window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
-    get: function () { supportsPassive = true; }
-  }));
-} catch(e) {}
-
-var wheelOpt = supportsPassive ? { passive: false } : false;
-var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-// call this to Disable
-function disableScroll() {
-  window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
-  window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
-}
-
-// call this to Enable
-function enableScroll(listener) {
-  window.removeEventListener('DOMMouseScroll', preventDefault, false); // older FF
-  window.removeEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
-  window.addEventListener('DOMMouseScroll', listener, false);
-  window.addEventListener(wheelEvent, listener, wheelOpt);
-}
-
-
 /* -----------------------------------------------
 /* Author : Vincent Garreau  - vincentgarreau.com
 /* MIT license: http://opensource.org/licenses/MIT
@@ -365,120 +12,121 @@ var pJS = function(tag_id, params){
   var canvas_el = document.querySelector('#'+tag_id+' > .particles-js-canvas-el');
 
   /* particles.js variables with default values */
-  this.pJS = this.pJS = {
+  this.pJS = {
     canvas: {
       el: canvas_el,
       w: canvas_el.offsetWidth,
       h: canvas_el.offsetHeight
     },
-    particles: {
-      number: {
-        value: 400,
-        density: {
-          enable: true,
-          value_area: 800
+    "particles": {
+      "number": {
+        "value": 40,
+        "density": {
+          "enable": true,
+          "value_area": 800
         }
       },
-      color: {
-        value: '#fff'
+      "color": {
+        "value": "#F7FFD2"
       },
-      shape: {
-        type: 'circle',
-        stroke: {
-          width: 0,
-          color: '#ff0000'
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
         },
-        polygon: {
-          nb_sides: 5
+        "polygon": {
+          "nb_sides": 5
         },
-        image: {
-          src: '',
-          width: 100,
-          height: 100
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
         }
       },
-      opacity: {
-        value: 1,
-        random: false,
-        anim: {
-          enable: false,
-          speed: 2,
-          opacity_min: 0,
-          sync: false
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
         }
       },
-      size: {
-        value: 20,
-        random: false,
-        anim: {
-          enable: false,
-          speed: 20,
-          size_min: 0,
-          sync: false
+      "size": {
+        "value": 2,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 80,
+          "size_min": 0.1,
+          "sync": false
         }
       },
-      line_linked: {
-        enable: true,
-        distance: 100,
-        color: '#fff',
-        opacity: 1,
-        width: 1
+      "line_linked": {
+        "enable": false,
+        "distance": 300,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 2
       },
-      move: {
-        enable: true,
-        speed: 2,
-        direction: 'none',
-        random: false,
-        straight: false,
-        out_mode: 'out',
-        bounce: false,
-        attract: {
-          enable: false,
-          rotateX: 3000,
-          rotateY: 3000
+      "move": {
+        "enable": true,
+        "speed": 1.5,
+        "direction": "right",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
         }
-      },
-      array: []
+      }
     },
-    interactivity: {
-      detect_on: 'canvas',
-      events: {
-        onhover: {
-          enable: true,
-          mode: 'grab'
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": false,
+          "mode": "repulse"
         },
-        onclick: {
-          enable: true,
-          mode: 'push'
+        "onclick": {
+          "enable": true,
+          "mode": "push"
         },
-        resize: true
+        "resize": true
       },
-      modes: {
-        grab:{
-          distance: 100,
-          line_linked:{
-            opacity: 1
+      "modes": {
+        "grab": {
+          "distance": 800,
+          "line_linked": {
+            "opacity": 1
           }
         },
-        bubble:{
-          distance: 200,
-          size: 80,
-          duration: 0.4
+        "bubble": {
+          "distance": 800,
+          "size": 80,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
         },
-        repulse:{
-          distance: 200,
-          duration: 0.4
+        "repulse": {
+          "distance": 400,
+          "duration": 0.4
         },
-        push:{
-          particles_nb: 4
+        "push": {
+          "particles_nb": 4
         },
-        remove:{
-          particles_nb: 2
+        "remove": {
+          "particles_nb": 2
         }
       },
-      mouse:{}
+      mouse: {}
     },
-    retina_detect: false,
+    "retina_detect": true,
     fn: {
       interact: {},
       modes: {},
@@ -510,9 +158,9 @@ var pJS = function(tag_id, params){
   pJS.fn.retinaInit = function(){
 
     if(pJS.retina_detect && window.devicePixelRatio > 1){
-      pJS.canvas.pxratio = window.devicePixelRatio;
+      pJS.canvas.pxratio = window.devicePixelRatio; 
       pJS.tmp.retina = true;
-    }
+    } 
     else{
       pJS.canvas.pxratio = 1;
       pJS.tmp.retina = false;
@@ -550,25 +198,25 @@ var pJS = function(tag_id, params){
 
       window.addEventListener('resize', function(){
 
-        pJS.canvas.w = pJS.canvas.el.offsetWidth;
-        pJS.canvas.h = pJS.canvas.el.offsetHeight;
+          pJS.canvas.w = pJS.canvas.el.offsetWidth;
+          pJS.canvas.h = pJS.canvas.el.offsetHeight;
 
-        /* resize canvas */
-        if(pJS.tmp.retina){
-          pJS.canvas.w *= pJS.canvas.pxratio;
-          pJS.canvas.h *= pJS.canvas.pxratio;
-        }
+          /* resize canvas */
+          if(pJS.tmp.retina){
+            pJS.canvas.w *= pJS.canvas.pxratio;
+            pJS.canvas.h *= pJS.canvas.pxratio;
+          }
 
-        pJS.canvas.el.width = pJS.canvas.w;
-        pJS.canvas.el.height = pJS.canvas.h;
+          pJS.canvas.el.width = pJS.canvas.w;
+          pJS.canvas.el.height = pJS.canvas.h;
 
-        /* repaint canvas on anim disabled */
-        if(!pJS.particles.move.enable){
-          pJS.fn.particlesEmpty();
-          pJS.fn.particlesCreate();
-          pJS.fn.particlesDraw();
-          pJS.fn.vendors.densityAutoParticles();
-        }
+          /* repaint canvas on anim disabled */
+          if(!pJS.particles.move.enable){
+            pJS.fn.particlesEmpty();
+            pJS.fn.particlesCreate();
+            pJS.fn.particlesDraw();
+            pJS.fn.vendors.densityAutoParticles();
+          }
 
         /* density particles enabled */
         pJS.fn.vendors.densityAutoParticles();
@@ -670,31 +318,31 @@ var pJS = function(tag_id, params){
     switch(pJS.particles.move.direction){
       case 'top':
         velbase = { x:0, y:-1 };
-        break;
+      break;
       case 'top-right':
         velbase = { x:0.5, y:-0.5 };
-        break;
+      break;
       case 'right':
         velbase = { x:1, y:-0 };
-        break;
+      break;
       case 'bottom-right':
         velbase = { x:0.5, y:0.5 };
-        break;
+      break;
       case 'bottom':
         velbase = { x:0, y:1 };
-        break;
+      break;
       case 'bottom-left':
         velbase = { x:-0.5, y:1 };
-        break;
+      break;
       case 'left':
         velbase = { x:-1, y:0 };
-        break;
+      break;
       case 'top-left':
         velbase = { x:-0.5, y:-0.5 };
-        break;
+      break;
       default:
         velbase = { x:0, y:0 };
-        break;
+      break;
     }
 
     if(pJS.particles.move.straight){
@@ -716,7 +364,7 @@ var pJS = function(tag_id, params){
     this.vx_i = this.vx;
     this.vy_i = this.vy;
 
-
+    
 
     /* if shape is image */
 
@@ -745,7 +393,7 @@ var pJS = function(tag_id, params){
       }
     }
 
-
+    
 
   };
 
@@ -755,7 +403,7 @@ var pJS = function(tag_id, params){
     var p = this;
 
     if(p.radius_bubble != undefined){
-      var radius = p.radius_bubble;
+      var radius = p.radius_bubble; 
     }else{
       var radius = p.radius;
     }
@@ -779,49 +427,49 @@ var pJS = function(tag_id, params){
 
       case 'circle':
         pJS.canvas.ctx.arc(p.x, p.y, radius, 0, Math.PI * 2, false);
-        break;
+      break;
 
       case 'edge':
         pJS.canvas.ctx.rect(p.x-radius, p.y-radius, radius*2, radius*2);
-        break;
+      break;
 
       case 'triangle':
         pJS.fn.vendors.drawShape(pJS.canvas.ctx, p.x-radius, p.y+radius / 1.66, radius*2, 3, 2);
-        break;
+      break;
 
       case 'polygon':
         pJS.fn.vendors.drawShape(
-            pJS.canvas.ctx,
-            p.x - radius / (pJS.particles.shape.polygon.nb_sides/3.5), // startX
-            p.y - radius / (2.66/3.5), // startY
-            radius*2.66 / (pJS.particles.shape.polygon.nb_sides/3), // sideLength
-            pJS.particles.shape.polygon.nb_sides, // sideCountNumerator
-            1 // sideCountDenominator
+          pJS.canvas.ctx,
+          p.x - radius / (pJS.particles.shape.polygon.nb_sides/3.5), // startX
+          p.y - radius / (2.66/3.5), // startY
+          radius*2.66 / (pJS.particles.shape.polygon.nb_sides/3), // sideLength
+          pJS.particles.shape.polygon.nb_sides, // sideCountNumerator
+          1 // sideCountDenominator
         );
-        break;
+      break;
 
       case 'star':
         pJS.fn.vendors.drawShape(
-            pJS.canvas.ctx,
-            p.x - radius*2 / (pJS.particles.shape.polygon.nb_sides/4), // startX
-            p.y - radius / (2*2.66/3.5), // startY
-            radius*2*2.66 / (pJS.particles.shape.polygon.nb_sides/3), // sideLength
-            pJS.particles.shape.polygon.nb_sides, // sideCountNumerator
-            2 // sideCountDenominator
+          pJS.canvas.ctx,
+          p.x - radius*2 / (pJS.particles.shape.polygon.nb_sides/4), // startX
+          p.y - radius / (2*2.66/3.5), // startY
+          radius*2*2.66 / (pJS.particles.shape.polygon.nb_sides/3), // sideLength
+          pJS.particles.shape.polygon.nb_sides, // sideCountNumerator
+          2 // sideCountDenominator
         );
-        break;
+      break;
 
       case 'image':
 
-      function draw(){
-        pJS.canvas.ctx.drawImage(
+        function draw(){
+          pJS.canvas.ctx.drawImage(
             img_obj,
             p.x-radius,
             p.y-radius,
             radius*2,
             radius*2 / p.img.ratio
-        );
-      }
+          );
+        }
 
         if(pJS.tmp.img_type == 'svg'){
           var img_obj = p.img.obj;
@@ -833,7 +481,7 @@ var pJS = function(tag_id, params){
           draw();
         }
 
-        break;
+      break;
 
     }
 
@@ -844,9 +492,9 @@ var pJS = function(tag_id, params){
       pJS.canvas.ctx.lineWidth = pJS.particles.shape.stroke.width;
       pJS.canvas.ctx.stroke();
     }
-
+    
     pJS.canvas.ctx.fill();
-
+    
   };
 
 
@@ -943,7 +591,7 @@ var pJS = function(tag_id, params){
           else if (p.x - p.radius < 0) p.vx = -p.vx;
           if (p.y + p.radius > pJS.canvas.h) p.vy = -p.vy;
           else if (p.y - p.radius < 0) p.vy = -p.vy;
-          break;
+        break;
       }
 
       /* events */
@@ -1017,7 +665,7 @@ var pJS = function(tag_id, params){
     pJS.tmp.count_svg = 0;
     pJS.fn.particlesEmpty();
     pJS.fn.canvasClear();
-
+    
     /* restart */
     pJS.fn.vendors.start();
 
@@ -1037,14 +685,14 @@ var pJS = function(tag_id, params){
 
       var opacity_line = pJS.particles.line_linked.opacity - (dist / (1/pJS.particles.line_linked.opacity)) / pJS.particles.line_linked.distance;
 
-      if(opacity_line > 0){
-
+      if(opacity_line > 0){        
+        
         /* style */
         var color_line = pJS.particles.line_linked.color_rgb_line;
         pJS.canvas.ctx.strokeStyle = 'rgba('+color_line.r+','+color_line.g+','+color_line.b+','+opacity_line+')';
         pJS.canvas.ctx.lineWidth = pJS.particles.line_linked.width;
         //pJS.canvas.ctx.lineCap = 'round'; /* performance issue */
-
+        
         /* path */
         pJS.canvas.ctx.beginPath();
         pJS.canvas.ctx.moveTo(p1.x, p1.y);
@@ -1078,7 +726,7 @@ var pJS = function(tag_id, params){
       p2.vy += ay;
 
     }
-
+    
 
   }
 
@@ -1109,14 +757,14 @@ var pJS = function(tag_id, params){
 
     for(var i = 0; i < nb; i++){
       pJS.particles.array.push(
-          new pJS.fn.particle(
-              pJS.particles.color,
-              pJS.particles.opacity.value,
-              {
-                'x': pos ? pos.pos_x : Math.random() * pJS.canvas.w,
-                'y': pos ? pos.pos_y : Math.random() * pJS.canvas.h
-              }
-          )
+        new pJS.fn.particle(
+          pJS.particles.color,
+          pJS.particles.opacity.value,
+          {
+            'x': pos ? pos.pos_x : Math.random() * pJS.canvas.w,
+            'y': pos ? pos.pos_y : Math.random() * pJS.canvas.h
+          }
+        )
       )
       if(i == nb-1){
         if(!pJS.particles.move.enable){
@@ -1158,7 +806,7 @@ var pJS = function(tag_id, params){
       if(dist_mouse <= pJS.interactivity.modes.bubble.distance){
 
         if(ratio >= 0 && pJS.interactivity.status == 'mousemove'){
-
+          
           /* size */
           if(pJS.interactivity.modes.bubble.size != pJS.particles.size.value){
 
@@ -1207,7 +855,7 @@ var pJS = function(tag_id, params){
       if(pJS.interactivity.status == 'mouseleave'){
         init();
       }
-
+    
     }
 
     /* on click event */
@@ -1252,7 +900,7 @@ var pJS = function(tag_id, params){
             if(p_obj_bubble != undefined){
               var value_tmp = p_obj - (time_spent * (p_obj - bubble_param) / pJS.interactivity.modes.bubble.duration),
                   dif = bubble_param - value_tmp;
-              value = bubble_param + dif;
+                  value = bubble_param + dif;
               if(id == 'size') p.radius_bubble = value;
               if(id == 'opacity') p.opacity_bubble = value;
             }
@@ -1286,7 +934,7 @@ var pJS = function(tag_id, params){
           repulseRadius = pJS.interactivity.modes.repulse.distance,
           velocity = 100,
           repulseFactor = clamp((1/repulseRadius)*(-1*Math.pow(dist_mouse/repulseRadius,2)+1)*repulseRadius*velocity, 0, 50);
-
+      
       var pos = {
         x: p.x + normVec.x * repulseFactor,
         y: p.y + normVec.y * repulseFactor
@@ -1299,7 +947,7 @@ var pJS = function(tag_id, params){
         p.x = pos.x;
         p.y = pos.y;
       }
-
+    
     }
 
 
@@ -1354,7 +1002,7 @@ var pJS = function(tag_id, params){
         // }else{
         //   process();
         // }
-
+        
 
       }else{
 
@@ -1362,7 +1010,7 @@ var pJS = function(tag_id, params){
 
           p.vx = p.vx_i;
           p.vy = p.vy_i;
-
+        
         }
 
       }
@@ -1392,7 +1040,7 @@ var pJS = function(tag_id, params){
           pJS.canvas.ctx.strokeStyle = 'rgba('+color_line.r+','+color_line.g+','+color_line.b+','+opacity_line+')';
           pJS.canvas.ctx.lineWidth = pJS.particles.line_linked.width;
           //pJS.canvas.ctx.lineCap = 'round'; /* performance issue */
-
+          
           /* path */
           pJS.canvas.ctx.beginPath();
           pJS.canvas.ctx.moveTo(p.x, p.y);
@@ -1484,15 +1132,15 @@ var pJS = function(tag_id, params){
                   pJS.fn.modes.pushParticles(pJS.interactivity.modes.push.particles_nb);
                 }
               }
-              break;
+            break;
 
             case 'remove':
               pJS.fn.modes.removeParticles(pJS.interactivity.modes.remove.particles_nb);
-              break;
+            break;
 
             case 'bubble':
               pJS.tmp.bubble_clicking = true;
-              break;
+            break;
 
             case 'repulse':
               pJS.tmp.repulse_clicking = true;
@@ -1501,14 +1149,14 @@ var pJS = function(tag_id, params){
               setTimeout(function(){
                 pJS.tmp.repulse_clicking = false;
               }, pJS.interactivity.modes.repulse.duration*1000)
-              break;
+            break;
 
           }
 
         }
 
       });
-
+        
     }
 
 
@@ -1712,7 +1360,7 @@ var pJS = function(tag_id, params){
           pJS.fn.vendors.init();
           pJS.fn.vendors.draw();
         }
-
+        
       }
 
     }else{
@@ -1759,7 +1407,7 @@ var pJS = function(tag_id, params){
   pJS.fn.vendors.eventsListeners();
 
   pJS.fn.vendors.start();
-
+  
 
 
 };
@@ -1769,7 +1417,7 @@ var pJS = function(tag_id, params){
 Object.deepExtend = function(destination, source) {
   for (var property in source) {
     if (source[property] && source[property].constructor &&
-        source[property].constructor === Object) {
+     source[property].constructor === Object) {
       destination[property] = destination[property] || {};
       arguments.callee(destination[property], source[property]);
     } else {
@@ -1781,22 +1429,22 @@ Object.deepExtend = function(destination, source) {
 
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame    ||
-      window.oRequestAnimationFrame      ||
-      window.msRequestAnimationFrame     ||
-      function(callback){
-        window.setTimeout(callback, 1000 / 60);
-      };
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame    ||
+    window.oRequestAnimationFrame      ||
+    window.msRequestAnimationFrame     ||
+    function(callback){
+      window.setTimeout(callback, 1000 / 60);
+    };
 })();
 
 window.cancelRequestAnimFrame = ( function() {
   return window.cancelAnimationFrame         ||
-      window.webkitCancelRequestAnimationFrame ||
-      window.mozCancelRequestAnimationFrame    ||
-      window.oCancelRequestAnimationFrame      ||
-      window.msCancelRequestAnimationFrame     ||
-      clearTimeout
+    window.webkitCancelRequestAnimationFrame ||
+    window.mozCancelRequestAnimationFrame    ||
+    window.oCancelRequestAnimationFrame      ||
+    window.msCancelRequestAnimationFrame     ||
+    clearTimeout
 } )();
 
 function hexToRgb(hex){
@@ -1804,13 +1452,13 @@ function hexToRgb(hex){
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-    return r + r + g + g + b + b;
+     return r + r + g + g + b + b;
   });
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
   } : null;
 };
 
@@ -1843,7 +1491,6 @@ window.particlesJS = function(tag_id, params){
   }
 
   /* pJS elements */
-  console.log(tag_id)
   var pJS_tag = document.getElementById(tag_id),
       pJS_canvas_class = 'particles-js-canvas-el',
       exist_canvas = pJS_tag.getElementsByClassName(pJS_canvas_class);
@@ -1876,117 +1523,20 @@ window.particlesJS = function(tag_id, params){
 window.particlesJS.load = function(tag_id, path_config_json, callback){
 
   /* load json config */
-        var params = {
-          "particles": {
-            "number": {
-              "value": 40,
-              "density": {
-                "enable": true,
-                "value_area": 800
-              }
-            },
-            "color": {
-              "value": "#F7FFD2"
-            },
-            "shape": {
-              "type": "circle",
-              "stroke": {
-                "width": 0,
-                "color": "#000000"
-              },
-              "polygon": {
-                "nb_sides": 5
-              },
-              "image": {
-                "src": "img/github.svg",
-                "width": 100,
-                "height": 100
-              }
-            },
-            "opacity": {
-              "value": 0.5,
-              "random": false,
-              "anim": {
-                "enable": false,
-                "speed": 1,
-                "opacity_min": 0.1,
-                "sync": false
-              }
-            },
-            "size": {
-              "value": 2,
-              "random": true,
-              "anim": {
-                "enable": false,
-                "speed": 80,
-                "size_min": 0.1,
-                "sync": false
-              }
-            },
-            "line_linked": {
-              "enable": false,
-              "distance": 300,
-              "color": "#ffffff",
-              "opacity": 0.4,
-              "width": 2
-            },
-            "move": {
-              "enable": true,
-              "speed": 1.5,
-              "direction": "right",
-              "random": false,
-              "straight": false,
-              "out_mode": "out",
-              "bounce": false,
-              "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-              }
-            }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-              "onhover": {
-                "enable": false,
-                "mode": "repulse"
-              },
-              "onclick": {
-                "enable": true,
-                "mode": "push"
-              },
-              "resize": true
-            },
-            "modes": {
-              "grab": {
-                "distance": 800,
-                "line_linked": {
-                  "opacity": 1
-                }
-              },
-              "bubble": {
-                "distance": 800,
-                "size": 80,
-                "duration": 2,
-                "opacity": 8,
-                "speed": 3
-              },
-              "repulse": {
-                "distance": 400,
-                "duration": 0.4
-              },
-              "push": {
-                "particles_nb": 4
-              },
-              "remove": {
-                "particles_nb": 2
-              }
-            }
-          },
-          "retina_detect": true
-        };
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', path_config_json);
+  xhr.onreadystatechange = function (data) {
+    if(xhr.readyState == 4){
+      if(xhr.status == 200){
+        var params = JSON.parse(data.currentTarget.response);
         window.particlesJS(tag_id, params);
         if(callback) callback();
+      }else{
+        console.log('Error pJS - XMLHttpRequest status: '+xhr.status);
+        console.log('Error pJS - File config not found');
+      }
+    }
+  };
+  xhr.send();
 
 };

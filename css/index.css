@@ -4274,7 +4274,9 @@ h1.page-title + .tag-cloud-list {
 div.anim-screen {
   width: 100% !important;
   padding: 0 !important;
-  background: #fff;
+}
+layout.homepage {
+  background-color: #fff;
 }
 div.text-transparent > p {
   color: transparent !important;
@@ -4285,6 +4287,37 @@ div.text-transparent > p {
 }
 div#screen1 {
   height: 3000px;
+}
+.particles-js-canvas-el {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.canvas-wrapper {
+  position: absolute;
+  height: calc(100vh - 2 * var(--nav-height));
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100%;
+  top: 0;
 }
 div.temp {
   height: 2000px;
@@ -4326,9 +4359,22 @@ div.temp {
   -ms-flex-pack: end;
   -webkit-justify-content: flex-end;
   justify-content: flex-end;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
 }
 .text-headline p {
   margin: 0;
+}
+div#screen2 {
+  height: 6000px;
+}
+#text-hl-2 {
+  position: relative;
+  top: 50px;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
 }
 #pagination .pagination {
   margin-top: 20px;
