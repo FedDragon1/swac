@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * 播放按钮hover
      */
-    const firstPageHeight = document.getElementById('page-header').offsetTop + document.getElementById('page-header').offsetHeight;
+    const firstPageHeight = document.getElementById('page-header').offsetTop + document.getElementById('page-header').offsetHeight + 5;
     const body = document.getElementsByTagName("body")[0]
     const playButtonTriangle = document.getElementById("play-btn-triangle")
     const playButton = document.getElementById("play-btn")
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             start: 'top 35%',
             end: '+=6000',
             scrub: true,
-            markers: true,
+            // markers: true,
             animation: gsap.timeline()
                 .fromTo("#screen2-fs-wrapper", {top: 0}, {
                     top: 6200,
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             start: 'top -=600',
             end: '+=5000',
             scrub: true,
-            markers: true,
+            // markers: true,
             animation: gsap.timeline()
                 .fromTo("#text-hl-2", {opacity: 0}, {
                     opacity: 1,
