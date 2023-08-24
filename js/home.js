@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             end: '+=3800',
             scrub: true,
             animation: gsap.timeline()
-                .fromTo('#screen1-fs-wrapper', {top: 0}, {top: 3400, ease: "none"}, "<")
+                .fromTo('#screen1-fs-wrapper', {top: 0}, {top: 3000, ease: "none"}, "<")
                 .fromTo('.layout.homepage', {background: '#ffffffff'}, {background: '#222222ff'}, '<')
                 .fromTo('#nav', {background: '#ffffffff'}, {background: '#aaaaaaff'}, '<')
                 .fromTo('#text-hl-1', {opacity: 0}, {
@@ -92,6 +92,120 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("#text-hl-1").style.opacity = '0.3';
 
     (function screen2anims() {
+        ScrollTrigger.create({
+            trigger: "#so-vits-project",
+            start: "top 40%",
+            end: "+=1500",
+            scrub: true,
+            // markers: true,
+            animation: gsap.timeline()
+                .fromTo("#so-vits-text", {opacity: 0}, {opacity: 1, ease: CustomEase.create("custom", "M0,0 C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")})
+                .fromTo("#so-vits-text", {top: 0}, {top: 1500, ease: "none"}, "<")
+        })
+
+        const vitsVideo = document.getElementById("so-vits-video").children[0];
+        const loraVideo = document.getElementById("sd-lora-video").children[0];
+        const aiVtbVideo = document.getElementById("ai-vtb-video").children[0];
+
+        ScrollTrigger.create({
+            trigger: "#so-vits-project",
+            start: "top 10%",
+            end: "+=1500",
+            scrub: true,
+            // markers: true,
+            animation: gsap.timeline()
+                .fromTo("#so-vits-video", {opacity: 0}, {opacity: 1, ease: CustomEase.create("custom", "M0,0,C0,0.204,0.052,1,0.2,1,0.284,1,0.624,1,0.7,1,0.82,1,0.916,0,0.916,0,0.95,0,1,0,1,0")})
+                .fromTo("#so-vits-video", {top: 400}, {top: 1600, ease: "none"}, "<"),
+            onEnter() {
+                vitsVideo.play();
+            },
+            onLeave() {
+                vitsVideo.pause();
+                vitsVideo.currentTime = 0;
+            },
+            onEnterBack() {
+                vitsVideo.play();
+            },
+            onLeaveBack() {
+                vitsVideo.pause();
+                vitsVideo.currentTime = 0;
+            }
+        })
+
+        ScrollTrigger.create({
+            trigger: "#sd-lora-project",
+            start: "top 40%",
+            end: "+=1500",
+            scrub: true,
+            // markers: true,
+            animation: gsap.timeline()
+                .fromTo("#sd-lora-text", {opacity: 0}, {opacity: 1, ease: CustomEase.create("custom", "M0,0 C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")})
+                .fromTo("#sd-lora-text", {top: 0}, {top: 1500, ease: "none"}, "<")
+        })
+
+        ScrollTrigger.create({
+            trigger: "#sd-lora-project",
+            start: "top 10%",
+            end: "+=1500",
+            scrub: true,
+            // markers: true,
+            animation: gsap.timeline()
+                .fromTo("#sd-lora-video", {opacity: 0}, {opacity: 1, ease: CustomEase.create("custom", "M0,0,C0,0.204,0.052,1,0.2,1,0.284,1,0.624,1,0.7,1,0.82,1,0.916,0,0.916,0,0.95,0,1,0,1,0")})
+                .fromTo("#sd-lora-video", {top: 400}, {top: 1600, ease: "none"}, "<"),
+            onEnter() {
+                loraVideo.play();
+            },
+            onLeave() {
+                loraVideo.pause();
+                loraVideo.currentTime = 0;
+            },
+            onEnterBack() {
+                loraVideo.play();
+            },
+            onLeaveBack() {
+                loraVideo.pause();
+                loraVideo.currentTime = 0;
+            }
+        })
+
+        ScrollTrigger.create({
+            trigger: "#ai-vtb-project",
+            start: "top 40%",
+            end: "+=1500",
+            scrub: true,
+            // markers: true,
+            animation: gsap.timeline()
+                .fromTo("#ai-vtb-text", {opacity: 0}, {opacity: 1, ease: CustomEase.create("custom", "M0,0 C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")})
+                .fromTo("#ai-vtb-text", {top: 0}, {top: 1500, ease: "none"}, "<")
+        })
+
+        ScrollTrigger.create({
+            trigger: "#ai-vtb-project",
+            start: "top 10%",
+            end: "+=1500",
+            scrub: true,
+            // markers: true,
+            animation: gsap.timeline()
+                .fromTo("#ai-vtb-video", {opacity: 0}, {opacity: 1, ease: CustomEase.create("custom", "M0,0,C0,0.204,0.052,1,0.2,1,0.284,1,0.624,1,0.7,1,0.82,1,0.916,0,0.916,0,0.95,0,1,0,1,0")})
+                .fromTo("#ai-vtb-video", {top: 400}, {top: 1600, ease: "none"}, "<"),
+            onEnter() {
+                aiVtbVideo.play();
+            },
+            onLeave() {
+                aiVtbVideo.pause();
+                aiVtbVideo.currentTime = 0;
+            },
+            onEnterBack() {
+                aiVtbVideo.play();
+            },
+            onLeaveBack() {
+                aiVtbVideo.pause();
+                aiVtbVideo.currentTime = 0;
+            }
+        })
+    })();
+
+    (function screen3anims() {
         const canvas = document.querySelector("#mlp-canvas")
         canvas.width = window.innerWidth * 0.8
         canvas.height = window.innerWidth * 0.8 * 9 / 16
@@ -107,13 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         ScrollTrigger.create({
-            trigger: "#screen2",
+            trigger: "#screen3",
             start: 'top 35%',
             end: '+=6000',
             scrub: true,
             // markers: true,
             animation: gsap.timeline()
-                .fromTo("#screen2-fs-wrapper", {top: 0}, {
+                .fromTo("#screen3-fs-wrapper", {top: 0}, {
                     top: 6200,
                     ease: CustomEase.create("custom", "M0,0,C0,0,0.088,0.036,0.2,0.148,0.2,0.148,0.9,0.84,0.9,0.84,0.952,0.892,1,1,1,1", "<")
                 })
@@ -129,13 +243,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         ScrollTrigger.create({
-            trigger: "#screen2",
+            trigger: "#screen3",
             start: 'top -=600',
             end: '+=5000',
             scrub: true,
             // markers: true,
             animation: gsap.timeline()
-                .fromTo("#text-hl-2", {opacity: 0}, {
+                .fromTo("#text-hl-3", {opacity: 0}, {
                     opacity: 1,
                     ease: CustomEase.create("custom", "M0,0 C0,0,0.016,1,0.2,1,0.304,1,0.734,1,0.8,1,0.988,1,1,0,1,0")
                 }, "<")
