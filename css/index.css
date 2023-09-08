@@ -4075,8 +4075,23 @@ h1.page-title + .tag-cloud-list {
   color: #ba8929;
   text-decoration: underline;
 }
-#nav {
+.nav-bg {
+  height: var(--nav-height);
+  background-color: var(--white);
   position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1999;
+}
+.home-nav {
+  position: sticky;
+  background: var(--white);
+}
+.post-nav {
+  position: fixed;
+  background: transparent;
+}
+#nav {
   top: 0;
   z-index: 2000;
   display: -webkit-box;
@@ -4100,7 +4115,6 @@ h1.page-title + .tag-cloud-list {
   -o-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s;
-  background-color: var(--white);
 }
 @media screen and (max-width: 768px) {
   #nav {
